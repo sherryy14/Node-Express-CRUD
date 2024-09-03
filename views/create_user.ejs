@@ -1,0 +1,44 @@
+<%- include("includes/header.ejs") %>
+
+    <body>
+        <div class="container">
+            <h1 class="text-center my-3">CRUD</h1>
+            <a href="/" class="btn btn-primary mb-3">Back</a>
+            <% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
+
+                <div class="alert alert-success">
+                    <%= success_msg %>
+                </div>
+            <% } %>
+            <% if (typeof error_msg  !== 'undefined' && error_msg .length > 0) { %>
+
+                <div class="alert alert-danger">
+                    <%= error_msg %>
+                </div>
+            <% } %>
+            <form class="row g-3" method="POST" action="/user/create">
+                <div class="col-md-6">
+                    <label for="validationDefault03" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" id="validationDefault03"
+                        placeholder="Write Your Name"required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="validationDefault05" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="Write Your Email" id="validationDefault05" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="validationDefault05" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Write Your Password" id="validationDefault05" required>
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </body>
+
+    </html>

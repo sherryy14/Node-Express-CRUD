@@ -1,0 +1,27 @@
+<%- include("includes/header.ejs") %>
+
+    <body>
+        <div class="container">
+            <h1 class="text-center my-3">CRUD</h1>
+            <a href="/" class="btn btn-primary mb-3">View All Users</a>
+            <form class="row g-3" method="POST" action="/users/<%= user[0].id %>?_method=PATCH">
+                <div class="col-md-6">
+                    <label for="validationDefault03" class="form-label">Title</label>
+                    <input type="text" class="form-control" name="name" id="validationDefault03"
+                        placeholder="Write Your Name" value="<%= user[0].name %>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="validationDefault05" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" value="<%= user[0].email %>" placeholder="Write Your Email" id="validationDefault05" required>
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </div>
+
+            </form>
+        </div>
+    </body>
+
+    </html>
