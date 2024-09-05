@@ -4,16 +4,36 @@
         <div class="container">
             <h1 class="text-center my-3">CRUD</h1>
             <a href="/" class="btn btn-primary mb-3">View All Users</a>
+               <!-- Display flash messages -->
+            <% if (typeof success_msg !== 'undefined' && success_msg.length > 0) { %>
+                <div class="alert alert-success">
+                    <%= success_msg %>
+                </div>
+            <% } %>
+            <% if (typeof error_msg  !== 'undefined' && error_msg .length > 0) { %>
+                <div class="alert alert-danger">
+                    <%= error_msg %>
+                </div>
+            <% } %>
             <form class="row g-3" method="POST" action="/users/<%= user[0].id %>?_method=PATCH">
                 <div class="col-md-6">
-                    <label for="validationDefault03" class="form-label">Title</label>
-                    <input type="text" class="form-control" name="name" id="validationDefault03"
-                        placeholder="Write Your Name" value="<%= user[0].name %>" required>
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" name="name" id="username" placeholder="Write Your Name"
+                        value="<%= user[0].name %>" >
                 </div>
 
                 <div class="col-md-6">
-                    <label for="validationDefault05" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="<%= user[0].email %>" placeholder="Write Your Email" id="validationDefault05" required>
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" value="<%= user[0].email %>"
+                        placeholder="Write Your Email" id="email" >
+                </div>
+
+                <div class="row justify-content-center mt-2">
+                    <div class="col-md-6">
+                        <label for="pass" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter Your Password"
+                            id="pass" >
+                    </div>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center">

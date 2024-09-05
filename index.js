@@ -121,14 +121,34 @@ app.get("/user/:id/edit", (req, res) => {
 // Update User Using Patch Method
 app.patch("/users/:id", (req, res) => {
   let id = req.params.id;
-  let { name, email } = req.body;
+
+  let { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    req.flash("error_msg", "All fields are required.");
+    return res.redirect(`/user/${id}/edit`);
+  }
   // to run query
-  let query = "UPDATE `users` SET `name` = ?, `email` = ? WHERE `id` = ?";
+  let checkPass = "SELECT * FROM `users` WHERE `id` = ?";
   try {
-    connection.query(query, [name, email, id], (err, users) => {
+    connection.query(checkPass, [id], (err, user) => {
       if (err) throw err;
-      req.flash("success_msg", "User updated successfully!");
-      res.redirect("/");
+      if (user[0].password !== password) {
+        req.flash("error_msg", "Password is incorrect.");
+        res.redirect(`/user/${id}/edit`);
+      } else {
+        let query = "UPDATE `users` SET `name` = ?, `email` = ? WHERE `id` = ?";
+        try {
+          connection.query(query, [name, email, id], (err, users) => {
+            if (err) throw err;
+            req.flash("success_msg", "User updated successfully!");
+            res.redirect("/");
+          });
+        } catch (err) {
+          req.flash("error_msg", "There was an error updating the user.");
+          res.redirect("/");
+        }
+      }
     });
   } catch (err) {
     req.flash("error_msg", "There was an error updating the user.");
@@ -161,6 +181,11 @@ app.get("/user/create", (req, res) => {
 // Save User Data
 app.post("/user/create", (req, res) => {
   let { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    req.flash("error_msg", "All fields are required.");
+    return res.redirect("/user/create");
+  }
   // to run query
   let query =
     "INSERT INTO `users` (`id`, `name`, `email`,`password`) VALUES (?, ?, ?, ?)";
